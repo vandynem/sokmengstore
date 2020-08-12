@@ -9,3 +9,5 @@ image/data/
 image/cache/
 system/storage/cache/
 system/storage/logs/
+storage/cache/
+storage/logs/
