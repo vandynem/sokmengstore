@@ -1,0 +1,31 @@
+<form action="{{ action }}" method="POST" target="aba_webservice" class="form-horizontal" id="aba_merchant_request">
+  	<input type="hidden" name="hash" value="{{ hash }}" id="hash"/>
+						<input type="hidden" name="tran_id" value="{{ transactionId }}" id="tran_id"/>
+						<input type="hidden" name="amount" value="{{ amount }}" id="amount"/>
+						<input type="hidden" name="firstname" value="{{ firstName }}"/>
+						<input type="hidden" name="lastname" value="{{ lastName }}"/>
+						<input type="hidden" name="phone" value="{{ phone }}"/>
+						<input type="hidden" name="email" value="{{ email }}"/>
+						<input type="hidden" name="return_url" value="{{ response_url }}"/>
+						<input type="hidden" name="continue_success_url" value="{{ response_url }}"/>
+						<input type="hidden" name="return_params" value="json"/>
+</form>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
+  </div>
+</div>
+
+<!--   Make a copy this javaScript to paste into your site -->
+		<!--   Note: these javaScript files are using for only integration testing -->
+		<!--<link rel="stylesheet" href="https://payway-staging.ababank.com/checkout-popup.html?file=css"/> 
+		<script src="https://payway-staging.ababank.com/checkout-popup.html?file=js"></script> -->
+
+		<!--   These javaScript files are using for only production -->
+		<link rel="stylesheet" href="https://payway.ababank.com/checkout-popup.html?file=css"/>
+		<script src="https://payway.ababank.com/checkout-popup.html?file=js"></script>
+<script type="text/javascript"><!--
+$('#button-confirm').bind('click', function() {
+	AbaPayway.checkout();
+});
+//--></script>

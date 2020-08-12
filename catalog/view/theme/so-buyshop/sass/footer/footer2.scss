@@ -1,0 +1,274 @@
+
+//** simple and lightweight mixin library for Sass **
+//-- url : http://bourbon.io/docs ---
+@import 'bourbon/bourbon';
+
+//** Mixins for Rem Font Sizing **
+//-- url : http://hugogiraudel.com/2013/03/18/ultimate-rem-mixin/
+@import 'utilities/rem';
+
+//** Variables for responsive design in bootstrap with sass **
+//-- url : https://gist.github.com/webinfinita/11407836
+@import 'utilities/bootstrap_breakpoints';
+
+//** Makes supporting both left-to-right (LTR) and right-to-left (RTL) easy.**
+//-- url : https://github.com/tysonmatanich/directional-scss
+@import 'utilities/directional';
+
+//Mixins utilities
+@import 'utilities/theme_variables';
+@import 'utilities/utilities';
+
+/* ================================================================================ */
+
+/*.footer-container{
+	margin-top: 40px;
+}*/
+.typefooter-2{
+	background: #fff;
+	
+	/*===================newsleter=========================*/
+#section-newsletter2{
+    background:$background;
+}
+.newsletter-home2{ padding:38px 0 45px 0; overflow:hidden;
+        .newsletter{ 
+            .title-block{
+                color: #fff; width:50%; float:$left;
+                .page-heading{ width:55%; float:$left;
+                    @include rem(font-size,19px);  
+                    padding-#{$left}:78px;
+                    background: url(#{$imgPath}icon/ico-newslet.png) no-repeat 0 0;
+                    @include if-rtl {
+				        background-position: 100% 0;
+				    }  
+                    span{@include rem(font-size,34px); 
+                        display:block; margin-top:10px;
+                    }                                    
+                }
+                .promotext{margin-top:6px;}
+                .pre-text{
+                    @include rem(font-size,14px);
+                }
+            }
+            .block_content{ width:50%; float:$left; margin-top:10px;
+                form.signup{ float:$right; margin:0px;
+                    width: 478px; display:inline-block;                    
+                    .form-group{
+                        width: 100%;
+                        border-radius: 25px;
+                        background-color: #fff;
+                        display: table;
+                        border: none;                        
+                        .input-box{
+                            width: 100%;
+                            background-color: #fff;
+                            border:none; 
+                            border-radius: 25px;
+                            //border-bottom-#{$left}-radius: 25px;
+                            //border-top-#{$left}-radius: 25px;                          
+                            display: table-cell;
+                            vertical-align: top;
+                            padding-#{$left}: 30px;                      
+                            .fa{
+                                font-size: 14px;
+                                color: #999;
+                                display: inline-block;
+                                vertical-align: middle;
+                            }
+                        }
+                        .subcribe{
+                            display: inline-block;
+                            vertical-align: top;                    
+                        }
+
+                      input{
+                        width: 95%;
+                        height: 52px;
+                        line-height: 52px;
+                        box-shadow: none;
+                        padding: side-values(0 0 0 5px);
+                        border: none;  
+                        display:inline-block;
+                        background: #fff;
+                        &::-moz-placeholder {
+                        color: #aaa;
+                            opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+                        }
+                        &:-ms-input-placeholder { color: #aaa; } // Internet Explorer 10+
+                        &::-webkit-input-placeholder  { color: #aaa; } // Safari and Chrome
+                        &:focus{
+                            z-index: 0;
+                        }
+                      }
+                    }
+
+                    .subcribe button{                     
+                      border: 0 none;
+                      margin-top:5px;
+                      margin-#{$right}:4px;
+                      text-align:center;
+                      border-radius: 50%;
+                      //border-bottom-#{$right}-radius: 5px;
+                      //border-top-#{$right}-radius: 5px;
+                      color: #fff;
+                      background:$background1;
+                      font-weight: 600;
+                      font-size: 100%;
+                      height: 41px;
+                      line-height: 41px;
+                      padding: 0;  
+                      width:41px;    
+                      text-transform: uppercase;
+                      &:focus{background:$background;}
+                      &:hover{ background:$background;}
+                      span{display:none;}
+                      i{font-size:16px; margin:12px 0 0px;}
+                    }
+                }
+            }
+        }
+    }
+
+	/* FOOTER CENTER */
+	h3.modtitle{
+       	color: #222222;
+        @include rem(font-size,18px);
+        line-height: 20px;
+        margin-bottom: 15px !important;
+        padding-bottom: 0px;
+        position: relative;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: none;
+	}
+		
+	.modcontent{
+		h3{
+			font-weight: 400;
+			text-transform: uppercase;
+			font-size: 13px;
+			margin-bottom: 10px;
+		}
+		ul.menu{
+			li{
+	           line-height: 25px; padding:7px 0;
+	           &:before{
+		           		content:"\f111";
+		           		font-family:'FontAwesome';
+		           		@include opacity(0);		           		
+		           		color: $linkColor;
+		           		font-size:6px;
+		           		vertical-align: middle;
+		           		@include transition(all 0.3s ease);
+		           }
+	           &:hover{	      		
+		           &:before{		           		
+		           		@include opacity(1);
+		           }
+	           }
+	          a{
+	            display: inline-block;
+	            border: 0 none;
+	            color: #444444;
+	            padding: 0;
+	            font-weight: 400;
+	            margin-#{$left}: 0px; 
+	            @include transition(all 0.3s ease);		 
+	            &:hover{
+	            	color: $linkColor;
+	            	margin-#{$left}: 10px; 
+	            }
+	          }
+	        }
+		}
+		
+	}
+	.footer-center{
+		.box-contactus{text-align:center;
+			h3.modtitle {letter-spacing:2px;}
+		}
+		.box-contactus{
+			border-bottom: solid 1px #ddd;
+			padding-top: 30px;
+			padding-bottom: 50px;
+		}
+		.contact-footer{ overflow:hidden; margin-top:15px;
+			ul  li{ padding:0px 60px; width:33%; float:$left; 
+				&.adres{
+					border-left:1px solid #dddddd;
+					border-right:1px solid #dddddd;
+				}
+				&:hover{
+					&:before{display:none;}					
+				}
+				i{margin-bottom:10px; font-size:26px; color:$linkColor;}
+				.icon-info{ 
+					span{display:block; margin-bottom:17px;
+						font-size:18px;
+						text-transform:uppercase;
+						letter-spacing:2px;
+						color:#222; 
+						font-weight:700;
+					}
+				}
+				.store-info{color:#444; line-height:24px;}
+			} 
+
+		}
+		
+	}
+	
+	.footer-top{
+		.row{padding: 60px 0 30px 0; border-bottom:solid 1px #ddd;}		
+		.footer-logo{
+			text-align:center;
+		}
+		.socials-footer{ text-align:$right;
+		    span{margin-#{$left}: 20px; margin-#{$right}: 15px;}
+		    ul{ display: inline-block; vertical-align: middle;
+		        li{
+			        float: $left;
+			        margin-#{$left}: 10px;
+			        a{
+			            display: block;
+			            width: 41px;
+			            height: 41px;
+			            line-height: 41px;
+			            text-align: center;
+			            color: #fff;
+			            @include rem(font-size,14px);
+			            background-color: $background1;
+			            border: none;
+			            border-radius:3px;
+			            &:hover{
+			            	border-color: $background;
+			                background-color: $background;
+			                color: #fff;
+			            }
+			        }
+			        
+			    }
+			}
+		}
+
+	}
+
+
+	/* FOOTER BOTTOM */
+	.footer-bottom{	  
+	    padding: 25px 0;
+	    color:#999999;	    
+	    .copyright{	        
+	        a{color:$linkColor;}        
+	    }
+	    .footer-payment{
+	      text-align: right;
+	    }
+	    .block-footer-menu{ text-align:$right;
+	    	ul li{display: inline-block; padding: 0 15px;
+	    		&:last-child{padding-#{$right}:0px;}
+	    	}
+	    }
+	}
+}

@@ -1,0 +1,30 @@
+<form action="{{ action }}" method="POST" class="form-horizontal" id="realex_form_redirect">
+  <input type="hidden" id="mid" name="mid" value="{{ merchant_id }}"/>
+<input type="hidden" name="lang" id="lang" value="en"/>
+<input type="hidden" name="orderid" id="orderid" value="{{ order_id }}"/>
+
+<input type="hidden" name="orderAmount" id="orderAmount" value="{{ amount }}"/>
+<input type="hidden" name="currency" id="currency" value="{{ currency }}"/>
+<input type="hidden" name="trType" id="trType" value="1"/>
+<input type="hidden" name="confirmURL" id="confirmURL" value="{{ response_url }}"/>
+<input type="hidden" name="cancelURL" id="cancelURL" value="{{ response_url }}"/>
+
+<input type="hidden" name="sid" id="sid" value="239635"/>
+<input type="hidden" name="did" id="did" value="240593"/>
+<input type="hidden" name="orderDate" id="orderDate" value="2016-1221T11:21:28.717+0700"/>
+<input type="hidden" name="payMethod" id="payMethod" value="wallet"/>
+<input type="hidden" name="digest"  id="digest" value="{{ digest }}"/>
+<input type="hidden" name="cancelTimer" value="300" />
+<input type="hidden" name="description" value="Extra information"/>
+<input type="hidden" name="successScreenDelay" value="0" />
+</form>
+<div class="buttons">
+  <div class="pull-right">
+    <input type="button" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
+  </div>
+</div>
+<script type="text/javascript"><!--
+$('#button-confirm').bind('click', function() {
+  $('#realex_form_redirect').submit();
+});
+//--></script>

@@ -1,0 +1,30 @@
+@include breakpoint(lg){
+	//SHOW MORE Footer
+	#collapse-footer.footer-main{    max-height: 100%;
+		&:before{display:none;}
+	}
+	.container{
+		 width: 1200px;
+	}
+	.product-detail.list .product-view .content-product-mainheader .row{
+	 	> div:last-child{
+	        width: auto !important;
+	        div.content-product-right{
+	        	 width: 664px !important;
+	        }
+	     }
+	     div.content-product-right{
+	     	width: 58.33333333% !important;
+	     }
+    }
+   
+}
+@media (min-width: 1200px) and (max-width: 1649px){
+	#content .so-groups-sticky{
+		width: 40px;
+	}
+}
+
+
+
+
