@@ -1,0 +1,119 @@
+{#=====Get variable : Config Select Block on header=====#}
+{% set hidden_headercenter = soconfig.get_settings('toppanel_type') =='2'? 'hidden-compact' : '' %}
+{% set hidden_headerbottom = soconfig.get_settings('toppanel_type') =='1'? 'hidden-compact' : '' %}
+{% set hidden_headertop = soconfig.get_settings('toppanel_type') =='1' or soconfig.get_settings('toppanel_type') =='2' ? 'hidden-compact' : '' %}
+
+<header id="header" class="variant typeheader-{{ typeheader ? typeheader : '1'}}">
+    
+    {#======	HEADER TOP	=======#}  
+	<div class="header-top {{hidden_headertop}}">
+		<div class="container">
+			<div class="row">
+				<div class="header-top-left collapsed-block col-lg-9 col-md-8 col-sm-6 col-xs-5">
+					{% if soconfig.get_settings('welcome_message_status') %}
+						<div class="hidden-sm hidden-xs welcome-msg">
+							{% if soconfig.get_settings('welcome_message') is not empty %}
+								{{ soconfig.decode_entities( soconfig.get_settings('welcome_message') ) }}
+							{% endif %} 
+						</div>
+					{% endif %}					
+
+					{% if soconfig.get_settings('lang_status') %}
+					<ul class="top-link list-inline lang-curr">
+					    {% if language %} <li class="language">{{ language }} </li>	{% endif %}
+						{% if currency %}<li class="currency"> {{ currency }}  </li> {% endif %}				
+					</ul>				
+					{% endif %} 
+
+					
+					<div class="pull-right hidden-sm hidden-xs">
+						{% if header_block is not empty %}
+							{{header_block}}
+						{% endif %}
+					</div>
+				</div>	
+				<div class="header-top-right collapsed-block col-lg-3 col-md-4 col-sm-6 col-xs-7">	
+					<div class="checkout_cart">	
+						<div class="shopping_cart">							
+						 	{{ cart }}
+						</div>	
+						<span class=" hidden-xs">|</span>			
+					 	{% if soconfig.get_settings('checkout_status') %}
+							<div class="link_checkout hidden-xs"><a href="{{ checkout }} " class="btn-link" title="{{ text_checkout }} "><span >{{ text_checkout }} </span></a></div>
+						{% endif %} 
+					</div>
+									
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- HEADER CENTER -->
+	<div class="header-center {{ hidden_headercenter }}">
+		<div class="container">
+			<div class="row">
+				<!-- LOGO -->
+				<div class="navbar-logo col-md-3 col-sm-12 col-xs-12">
+					<div class="logo">
+				   		{{soconfig.get_logo()}}
+				   	</div>
+				</div>
+				<div class="header-center-right col-md-9 col-sm-12 col-xs-12">	
+					<div class="row">
+						{% if search_block %}
+							<div class="search-header-w col-lg-7 col-md-6 col-sm-6 col-xs-12">
+								<span class="hidden-lg hidden-md hidden-sm search-mobi"><i class="fa fa-search"></i></span>	
+								<div class="searchbox">			
+								 {{ search_block }}
+								</div>
+							</div>
+						{% endif %} 
+						<div class="header-link-right hidden-xs col-lg-5 col-md-6 col-sm-6 col-xs-12">
+							{{header_block2}}
+							<div class="signin-w font-title">
+								<ul class="top-link list-inline">							
+									{% if logged %} 
+										<li class="log logout"><i class="fa fa-unlock"></i> <a class="link-lg" href="{{ logout }} "> {{ text_logout }} </a></li>
+									{% else %}   
+										<li class="log login"><i class="fa fa-lock"></i><span><a class="link-lg" href="{{ login }} ">{{ text_login }} </a> {{ objlang.get('text_or') }} <a href="{{ register }}">{{ text_register }}</a></span></li>								
+									{% endif %} 								
+								</ul>	
+													
+							</div>
+							
+							{% if soconfig.get_settings('phone_status') and soconfig.get_settings('contact_number') %}
+							<div class="telephone hidden-sm hidden-xs" >
+								{{ soconfig.decode_entities( soconfig.get_settings('contact_number') ) }}
+							</div>
+							{% endif %} 
+						</div>
+					</div>
+				</div>
+			</div>           
+
+		</div>
+	</div>
+	
+	<!-- HEADER BOTTOM -->
+	<div class="header-bottom {{ hidden_headerbottom }}">
+		<div class="container">
+		    <div class="row">
+				
+				<div class="col-lg-3 col-md-3 col-sm-2 col-xs-2 menu-vertical">
+					<div class=" megamenu-dev">
+					{{ content_menu2 }}
+					</div>
+				</div>
+				<div class="col-md-9 col-sm-9 col-xs-8 mega-horizontal">
+					<div class="megamenu-style-dev megamenu-dev">
+						<!-- BOX CONTENT MENU -->
+						{{ content_menu1}}	
+					</div>				
+				</div>
+			</div>
+		</div>
+	  
+	</div>
+	
+	
+</header>

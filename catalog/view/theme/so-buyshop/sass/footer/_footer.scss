@@ -1,0 +1,17 @@
+footer .copyright a{
+	color: #737373;
+	&:hover{
+		color: $linkColor !important;
+	}
+}
+
+.typefooter-1 .newsletter-footer1 .newsletter .block_content form.signup .subcribe button{
+	background-color: $background;
+	&:hover{
+		background-color: darken($background,30%);
+	}
+}
+.typefooter-1 .modcontent h3{
+	color: $linkColor;
+}
+
