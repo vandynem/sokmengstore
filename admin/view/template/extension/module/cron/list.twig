@@ -92,6 +92,8 @@
                       <td class="text-right">
                         <a href="{{ cron.edit }}" class="btn btn-primary" data-toggle="tooltip" data-title="{{ button_edit }}"><i class="fa fa-pencil"></i></a>
                         <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play"></i></button>
+                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_exit }}" class="btn btn-danger"><i class="fa fa-stop"></i></button>
+
                         {# {% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                         {% else %}
@@ -152,7 +154,36 @@ $('#form-cron .btn-warning').on('click', function() {
 	});
 });
 
-$('#form-cron').on('click', '.btn-success', function() {
+$('#form-cron .btn-danger').on('click', function() {
+	var element = this;
+
+	$.ajax({
+		url: 'index.php?route=extension/module/cron/exit&user_token={{ user_token }}&cron_id=' + $(element).val(),
+		dataType: 'json',
+		beforeSend: function() {
+			$(element).button('loading');
+		},
+		complete: function() {
+			$(element).button('reset');
+		},
+		success: function(json) {
+			$('.alert-dismissible').remove();
+
+			if (json['error']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+
+			if (json['success']) {
+				$('#content > .container-fluid').prepend('<div class="alert alert-success alert-dismissible"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+
+{# $('#form-cron').on('click', '.btn-success', function() {
 	var element = this;
 
 	$.ajax({
@@ -212,6 +243,6 @@ $('#form-cron').on('click', '.btn-danger', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
-//--></script>
+}); #}
+</script>
 {{ footer }}

@@ -548,9 +548,16 @@ class ControllerExtensionModuleCron extends Controller {
             );
             return $schedules;
         }
-    }
+	}
+	
+	protected function execCron($cron_id, $time){
 
-    public function run() {
+		$output = shell_exec('crontab -e');
+		file_put_contents('/tmp/crontab.txt', $output.''.$time.' curl --request POST "http://localhost/sokmengstore/index.php?route=rest/mail&id='.$cron_id.'"'.PHP_EOL);
+		exec('crontab /tmp/crontab.txt');
+	}
+
+	public function exit() {
         $this->load->language('extension/module/cron');
 
         $json = array();
@@ -564,36 +571,69 @@ class ControllerExtensionModuleCron extends Controller {
         if (!$this->user->hasPermission('modify', 'extension/module/cron')) {
             $json['error'] = $this->language->get('error_permission');
         } else {
-            $this->load->model('extension/module/cron');
-            // LIST OF CRON DATA
-            $cron_info = $this->model_extension_module_cron->getCron($cron_id);
+			$time ='# * * * * *'; 
+			$output = shell_exec('crontab -e');
+			file_put_contents('/tmp/crontab.txt', $output.''.$time.' curl --request POST "http://localhost/sokmengstore/index.php?route=rest/mail&id='.$cron_id.'"'.PHP_EOL);
+			exec('crontab /tmp/crontab.txt');
 
-            if($cron_info['repeat_on'] == 'daily' && $cron_info['notif_type'] == 'push'){
-                // var_dump("daily");
-            // } 
-            // elseif ($cron_info['repeat_on'] == 'weekly'){
-            //     var_dump("weekly");
-            // } elseif ($cron_info['repeat_on'] == 'monthly'){
-            //     var_dump("monthly");
-
-            // $output = shell_exec('crontab -e');
-            // $output = shell_exec('crontab -l');
-
-            // shell_exec($output);
-            // var_dump($output);
-
-            file_put_contents('/tmp/crontab.txt', $output.'# * * * * * curl --request POST "http://localhost/opencart/upload/?route=api/voucher/send"'.PHP_EOL);
-            exec('crontab /tmp/crontab.txt');
-
-            } else {
-                var_dump("none");
-            }
-
-            $json['success'] = $this->language->get('text_success');
+            $json['success'] = $this->language->get('Cron Job stop working');
         }
 
         $this->response->addHeader('Content-Type: application/json');
         $this->response->setOutput(json_encode($json));
-    }
+	}
 
+    public function run() {
+
+        $this->load->language('extension/module/cron');
+
+        $json = array();
+
+        if (isset($this->request->get['cron_id'])) {
+            $cron_id = $this->request->get['cron_id'];
+        } else {
+            $cron_id = 0;
+        }
+
+        if (!$this->user->hasPermission('modify', 'extension/module/cron')) {
+            $json['error'] = $this->language->get('error_permission');
+        } else {
+			$this->load->model('extension/module/cron');
+			
+			$cron_info = $this->model_extension_module_cron->getCron($cron_id);
+			$cron_id = $cron_info['cron_id'];
+			
+            if($cron_info['notif_type'] == 'email'){
+				if($cron_info['repeat_on'] == 'daily'){
+					$time ='15 8 * * *'; // Run cron daily once at every day at 8:15 am.
+					$this->execCron($cron_id, $time);
+				} elseif ($cron_info['repeat_on'] == 'weekly'){
+					$time ='15 8 * * 7'; // Run cron weekly once every week at 8:15am.
+					$this->execCron($cron_id, $time);
+				} elseif ($cron_info['repeat_on'] == 'monthly'){ 
+					$time ='15 8 1 * *'; // Run cron weekly once at 8:15am.
+					$this->execCron($cron_id, $time);
+				} else {
+					$json['success'] = $this->language->get('Repeat_On is None');
+				}
+			} else {
+				if($cron_info['repeat_on'] == 'daily'){
+					$time ='15 8 * * *'; 
+					var_dump("Pust at", $time);
+				} elseif ($cron_info['repeat_on'] == 'weekly'){
+					$time ='15 8 * * 7'; 
+					var_dump("Pust at", $time);
+				} elseif ($cron_info['repeat_on'] == 'monthly'){ 
+					$time ='15 8 1 * *'; 
+					var_dump("Pust at", $time);
+				} else {
+					$json['success'] = $this->language->get('Repeat_On is None');
+				}
+			}
+            $json['success'] = $this->language->get('Cron Job start working');
+        }
+
+        $this->response->addHeader('Content-Type: application/json');
+        $this->response->setOutput(json_encode($json));
+	}
 }

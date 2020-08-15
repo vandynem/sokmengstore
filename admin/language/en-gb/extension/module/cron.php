@@ -24,6 +24,8 @@ $_['text_email']           = 'Email';
 // Button
 $_['button_run']           = 'Run Cron';
 $_['button_edit']          = 'Edit Cron';
+$_['button_exit']          = 'Exit Cron';
+
 
 // Column
 $_['column_action']        = 'Action';

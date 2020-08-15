@@ -140,4 +140,10 @@ class ModelExtensionModuleCron extends Model {
 			PRIMARY KEY (`cron_id`)
 			) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
 	}
+
+	public function getCustomerEmailByCustomerGroupId($customer_group_id) {
+
+		$query = $this->db->query("SELECT email FROM " . DB_PREFIX . "customer WHERE customer_group_id = '" . (int)$customer_group_id . "'");
+		return $query->rows;
+	}
 }
