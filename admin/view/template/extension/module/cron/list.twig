@@ -14,7 +14,6 @@
         {% endfor %}
       </ol>
 
-
     </div>
   </div>
   <div class="container-fluid">
@@ -32,12 +31,12 @@
 
 
 
-    <div class="panel panel-default">
+    {# <div class="panel panel-default">
       <div class="panel-heading"><i class="fa fa-question-circle"></i> {{ text_instruction }}</div>
-      <div class="panel-body">
+      <div class="panel-body"> #}
         {# <p>{{ text_cron_1 }}</p> #}
         {# <p>{{ text_cron_2 }}</p> #}
-        <div class="form-group">
+        {# <div class="form-group">
           <div class="input-group">
             <div class="input-group-addon">{{ entry_cron }}
             </div>
@@ -48,7 +47,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> #}
 
     <div class="panel panel-default">
       <div class="panel-heading"><i class="fa fa-list"></i> {{ text_list }}</div>
@@ -91,14 +90,14 @@
                       <td class="text-left">{{ cron.updated_on }}</td>
                       <td class="text-right">
                         <a href="{{ cron.edit }}" class="btn btn-primary" data-toggle="tooltip" data-title="{{ button_edit }}"><i class="fa fa-pencil"></i></a>
-                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play"></i></button>
-                        <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_exit }}" class="btn btn-danger"><i class="fa fa-stop"></i></button>
+                        {# <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_run }}" class="btn btn-warning"><i class="fa fa-play"></i></button> #}
+                        {# <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_exit }}" class="btn btn-danger"><i class="fa fa-stop"></i></button> #}
 
-                        {# {% if not cron.enabled %}
+                        {% if not cron.enabled %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_enable }}" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
                         {% else %}
                           <button type="button" value="{{ cron.cron_id }}" data-toggle="tooltip" data-title="{{ button_disable }}" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
-                        {% endif %}</td> #}
+                        {% endif %}</td>
                     </tr>
                   {% endfor %}
                 {% else %}
@@ -119,6 +118,8 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+
+{# 
 $('#button-copy').on('click', function() {
 	$('#input-cron').select();
 
@@ -152,9 +153,9 @@ $('#form-cron .btn-warning').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
+}); #}
 
-$('#form-cron .btn-danger').on('click', function() {
+{# $('#form-cron .btn-danger').on('click', function() {
 	var element = this;
 
 	$.ajax({
@@ -181,7 +182,7 @@ $('#form-cron .btn-danger').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});
-});
+}); #}
 
 $('#form-cron').on('click', '.btn-success', function() {
 	var element = this;

@@ -21,8 +21,6 @@
 
     <div class="panel panel-default">
 
-
-
       <div class="panel-heading">
         <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
       </div>
@@ -64,14 +62,19 @@
 
 
            <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-action">{{ entry_start_at }}</label>
-            <div class="col-sm-10">
-              <input class="form-control" id="input-action" type="date" name="start_at" value="{{ start_at }}" placeholder="start at" />
+            <label class="col-sm-2 control-label" for="input-start-at">{{ entry_start_at }}</label>
+            <div class="col-sm-3">
+              <input class="form-control" id="input-start-at" type="date" name="start_at" value="{{ start_at }}" placeholder="{{ entry_start_at }}" />
+            </div>
+
+            <label class="col-sm-2 control-label" for="input_start_time_at">{{ entry_start_time_at }}</label>
+            <div class="col-sm-3">
+              <input class="form-control" id="input_start_time_at" type="time" name="start_time_at" value="{{ start_time_at }}" placeholder="{{ entry_start_time_at }}" />
             </div>
           </div>
 
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-cycle">{{ entry_repeat_on }}</label>
+            <label class="col-sm-2 control-label" for="input_repeat_on">{{ entry_repeat_on }}</label>
             <div class="col-sm-10">
               <select name="repeat_on" id="input-cycle" class="form-control">
                 <option value="none"{{ repeat_on == 'none' ? ' selected="selected"' : '' }}>{{ text_none }}</option>
@@ -83,7 +86,7 @@
           </div>
 
           <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-cycle">{{ entry_notification_type }}</label>
+            <label class="col-sm-2 control-label" for="input_notif_type">{{ entry_notification_type }}</label>
             <div class="col-sm-10">
               <select name="notif_type" id="input-cycle" class="form-control">
                 <option value="push"{{ notif_type == 'push' ? ' selected="selected"' : '' }}>{{ text_push }}</option>
@@ -93,9 +96,9 @@
           </div>
 
            <div class="form-group required">
-            <label class="col-sm-2 control-label" for="input-action">{{ entry_notification_content }}</label>
+            <label class="col-sm-2 control-label" for="input_notif_content">{{ entry_notification_content }}</label>
             <div class="col-sm-10">
-              <input class="form-control" id="input-action" type="JSON" name="notif_content" value="{{ notif_content }}" placeholder="Content" />
+              <input class="form-control" id="input-notif_content" type="JSON" name="notif_content" value="{{ notif_content }}" placeholder="Content" />
             </div>
           </div>
 
