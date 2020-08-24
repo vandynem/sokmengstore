@@ -1,12 +1,10 @@
 <?php
 class ModelExtensionModuleCron extends Model {
-	// public function addCron($code, $cycle = 'day', $action, $status) {
-	// 	$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET `code` = '" . $this->db->escape($code) . "', `cycle` = '" . $this->db->escape($cycle) . "', `action` = '" . $this->db->escape($action) . "', `status` = '" . (int)$status . "', `date_added` = NOW(), `date_modified` = NOW()");
-
-	// 	return $this->db->getLastId();
-	// }
 
 	public function addCron($campaign_name, $campaign_desc, $customer_group, $start_at, $repeat_on, $notif_type, $notif_content) {
+
+		// $start_at = strtotime('2020-08-19 11:42:04');
+
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET 
 		`campaign_name` = '" . $this->db->escape($campaign_name) . "', 
 		`campaign_desc` = '" . $this->db->escape($campaign_desc) . "', 
@@ -21,15 +19,15 @@ class ModelExtensionModuleCron extends Model {
 		return $this->db->getLastId();
 	}
 
-	public function editCron($cron_id, $data) {
+	public function editCron($cron_id, $campaign_name, $campaign_desc, $customer_group, $start_at, $repeat_on, $notif_type, $notif_content) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET 
-		`campaign_name` = '" . $this->db->escape($data['campaign_name']) . "', 
-		`campaign_desc` = '" . $this->db->escape($data['campaign_desc']) . "', 
-		`customer_group` = '" . $this->db->escape($data['customer_group']) . "', 
-		`start_at` = '" . $this->db->escape($data['start_at']) . "',  
-		`repeat_on` = '" . $this->db->escape($data['repeat_on']) . "',  
-		`notif_type` = '" . $this->db->escape($data['notif_type']) . "',  
-		`notif_content` = '" . $this->db->escape($data['notif_content']) . "',  
+		`campaign_name` = '" . $this->db->escape($campaign_name) . "', 
+		`campaign_desc` = '" . $this->db->escape($campaign_desc) . "', 
+		`customer_group` = '" . $this->db->escape($customer_group) . "', 
+		`start_at` = '" . $this->db->escape($start_at) . "',
+		`repeat_on` = '" . $this->db->escape($repeat_on) . "',
+		`notif_type` = '" . $this->db->escape($notif_type) . "',
+		`notif_content` = '" . $this->db->escape($notif_content) . "', 
 		`updated_on` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
 	}
 
@@ -111,29 +109,17 @@ class ModelExtensionModuleCron extends Model {
 		return $query->row['total'];
 	}
 
-	// 	public function install() {
-	// 	$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cron` (
-	// 		`cron_id` int(11) NOT NULL AUTO_INCREMENT,
-	// 		`code` varchar(64) NOT NULL,
-	// 		`cycle` varchar(12) NOT NULL,
-	// 		`action` text NOT NULL,
-	// 		`status` tinyint(1) NOT NULL,
-	// 		`date_added` datetime NOT NULL,
-	// 		`date_modified` datetime NOT NULL,
-	// 		PRIMARY KEY (`cron_id`)
-	// 		) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
-	// }	
-
 	public function install() {
 		$this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "cron` (
 			`cron_id` int(11) NOT NULL AUTO_INCREMENT,
 			`campaign_name` varchar(64) NOT NULL,
 			`campaign_desc` varchar(100) NOT NULL,
-			`customer_group` varchar(32) NOT NULL,
-			`start_at` datetime NOT NULL,
+			`customer_group` int(5) NOT NULL,
+			`start_at` timestamp NOT NULL,
 			`repeat_on` varchar(20) NOT NULL,
 			`notif_type` varchar(10) NOT NULL,
 			`notif_content` varchar(100) NOT NULL,
+			`status` tinyint(1) NOT NULL,
 			`created_on` datetime NOT NULL,
 			`updated_on` datetime NOT NULL,
 
@@ -144,6 +130,12 @@ class ModelExtensionModuleCron extends Model {
 	public function getCustomerEmailByCustomerGroupId($customer_group_id) {
 
 		$query = $this->db->query("SELECT email FROM " . DB_PREFIX . "customer WHERE customer_group_id = '" . (int)$customer_group_id . "'");
+		return $query->rows;
+	}
+
+	public function getNotificationType($cron_id) {
+
+		$query = $this->db->query("SELECT notif_type FROM " . DB_PREFIX ."cron` WHERE `cron_id` = '". (int)$cron_id . "'");
 		return $query->rows;
 	}
 }
