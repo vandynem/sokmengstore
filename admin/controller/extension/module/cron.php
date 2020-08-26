@@ -591,9 +591,14 @@ class ControllerExtensionModuleCron extends Controller {
 			file_put_contents('/tmp/crontab.txt', $output.''.$time.' curl --request POST "http://localhost/sokmengstore/index.php?route=rest/mail&id='.$cron_id.'"'.PHP_EOL);
 			exec('crontab /tmp/crontab.txt');
 		} else {
+			// $output = shell_exec('crontab -e');
+			// file_put_contents('/tmp/crontab.txt', $output.''.$time
+			// .' wget "http://localhost/sokmengstore/admin/index.php?route=marketing/flashsale&title="'.$notifTitle.'"&message="'.$notifMsg .'"'.PHP_EOL);
+			// exec('crontab /tmp/crontab.txt');
+
 			$output = shell_exec('crontab -e');
 			file_put_contents('/tmp/crontab.txt', $output.''.$time
-			.' wget "http://localhost/sokmengstore/admin/index.php?route=marketing/flashsale&title="'.$notifTitle.'"&message="'.$notifMsg .'"'.PHP_EOL);
+			.' curl --request POST "http://localhost/sokmengstore/index.php?route=rest/push/pushNotification"'.PHP_EOL);
 			exec('crontab /tmp/crontab.txt');
 		}
 	}
