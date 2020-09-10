@@ -19,6 +19,9 @@ $_['text_month']           = 'Monthly';
 $_['text_none']            = 'None';
 $_['text_push']            = 'Push';
 $_['text_email']           = 'Email';
+$_['text_customer_all']    = 'All Customers';
+$_['text_customer_group']  = 'Customer Group';
+$_['text_customer']        = 'Customers';
 
 
 // Button
@@ -38,14 +41,17 @@ $_['column_action']        = 'Action';
 $_['column_campaign']                = 'Campaign Name';
 $_['column_campaign_description']    = 'Campaign Description';
 $_['column_customer_group']          = 'Customer Group';
+$_['column_customer']                = 'Customer';
 $_['column_start_at']                = 'Start At';
-$_['column_repeat_on']              = 'Repeat On';
+$_['column_repeat_on']               = 'Repeat On';
 $_['column_notification_type']       = 'Notification Type';
 $_['column_notification_content']    = 'Notification Content';
 $_['column_created_on']              = 'Created On';
 $_['column_updated_on']              = 'Updated On';
 
 // entry
+$_['entry_to']                      = 'To';
+$_['entry_customer']                = 'Customer';
 $_['entry_campaign']                = 'Campaign Name';
 $_['entry_campaign_description']    = 'Campaign Description';
 $_['entry_customer_group']          = 'Customer Group';
@@ -67,5 +73,9 @@ $_['error_start_time_at']           = 'Error: Time is required';
 $_['error_repeate_on']              = 'Error: Repeat On is required';
 $_['error_notification_type']       = 'Error: Notification Type is required';
 $_['error_notification_content']    = 'Error: Notification Content is required';
-
 $_['error_permission']              = 'Warning: You do not have permission to modify cron jobs!';
+$_['error_start_at_check']          = 'Warning: Start At must be in the future';
+
+
+// Help
+$_['help_customer']                 = '(Autocomplete)';

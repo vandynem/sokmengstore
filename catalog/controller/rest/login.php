@@ -44,6 +44,7 @@ class ControllerRestLogin extends RestController
                     $email = $post['email'];
 
                     $customer_info = $this->model_account_customer->getCustomerByEmail($email);
+                    $customer_info['customer_id'] = intval( $customer_info['customer_id']);
 
                     if ($customer_info && !$customer_info['status']) {
                         $this->json['error'][] = $this->language->get('error_approved');
@@ -108,7 +109,7 @@ class ControllerRestLogin extends RestController
                 $customer_info['wishlist_total'] = $this->model_account_wishlist->getTotalWishlist();
 
                 $customer_info['cart_count_products'] = $this->cart->countProducts();
-                //$customer_info['cart_total'] = $this->currency->format($this->cart->getTotal(), $this->currency->getRestCurrencyCode());
+                $customer_info['cart_total'] = $this->currency->format($this->cart->getTotal(), $this->currency->getRestCurrencyCode());
 
                 $this->json['data'] = $customer_info;
             }

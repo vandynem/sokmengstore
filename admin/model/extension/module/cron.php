@@ -1,14 +1,13 @@
 <?php
 class ModelExtensionModuleCron extends Model {
 
-	public function addCron($campaign_name, $campaign_desc, $customer_group, $start_at, $repeat_on, $notif_type, $notif_content) {
-
-		// $start_at = strtotime('2020-08-19 11:42:04');
+	public function addCron($campaign_name, $campaign_desc, $customer_group, $customer, $start_at, $repeat_on, $notif_type, $notif_content) {
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "cron` SET 
 		`campaign_name` = '" . $this->db->escape($campaign_name) . "', 
 		`campaign_desc` = '" . $this->db->escape($campaign_desc) . "', 
-		`customer_group` = '" . $this->db->escape($customer_group) . "', 
+		`customer_group` = '" . $this->db->escape($customer_group) . "',
+		`customer` = '" . $this->db->escape($customer) . "', 
 		`start_at` = '" . $this->db->escape($start_at) . "',
 		`repeat_on` = '" . $this->db->escape($repeat_on) . "',
 		`notif_type` = '" . $this->db->escape($notif_type) . "',
@@ -19,11 +18,12 @@ class ModelExtensionModuleCron extends Model {
 		return $this->db->getLastId();
 	}
 
-	public function editCron($cron_id, $campaign_name, $campaign_desc, $customer_group, $start_at, $repeat_on, $notif_type, $notif_content) {
+	public function editCron($cron_id, $campaign_name, $campaign_desc, $customer_group, $customer, $start_at, $repeat_on, $notif_type, $notif_content) {
 		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET 
 		`campaign_name` = '" . $this->db->escape($campaign_name) . "', 
 		`campaign_desc` = '" . $this->db->escape($campaign_desc) . "', 
 		`customer_group` = '" . $this->db->escape($customer_group) . "', 
+		`customer` = '" . $this->db->escape($customer) . "', 
 		`start_at` = '" . $this->db->escape($start_at) . "',
 		`repeat_on` = '" . $this->db->escape($repeat_on) . "',
 		`notif_type` = '" . $this->db->escape($notif_type) . "',
@@ -35,16 +35,16 @@ class ModelExtensionModuleCron extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `cron_id` = '" . (int)$cron_id . "'");
 	}
 	
-	public function deleteCronByCode($code) {
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
-	}
+	// public function deleteCronByCode($code) {
+	// 	$this->db->query("DELETE FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "'");
+	// }
 
-	public function runCron($cron_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `created_on` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
-	}
+	// public function runCron($cron_id) {
+	// 	$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `created_on` = NOW() WHERE cron_id = '" . (int)$cron_id . "'");
+	// }
 
 	public function editStatus($cron_id, $status) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "cron` SET `status` = '" . (int)$status . "' WHERE cron_id = '" . (int)$cron_id . "'");	
 	}
 
 	public function getCron($cron_id) {
@@ -53,11 +53,11 @@ class ModelExtensionModuleCron extends Model {
 		return $query->row;
 	}
 
-	public function getCronByCode($code) {
-		$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
+	// public function getCronByCode($code) {
+	// 	$query = $this->db->query("SELECT DISTINCT * FROM `" . DB_PREFIX . "cron` WHERE `code` = '" . $this->db->escape($code) . "' LIMIT 1");
 
-		return $query->row;
-	}
+	// 	return $query->row;
+	// }
 		
 	public function getCrons($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "cron`";
@@ -66,6 +66,7 @@ class ModelExtensionModuleCron extends Model {
 			`campaign_name`,
 			`campaign_desc`,
 			`customer_group` ,
+			`customer` ,
 			`start_at` ,
 			`repeat_on`,
 			`notif_type`,
@@ -115,7 +116,8 @@ class ModelExtensionModuleCron extends Model {
 			`campaign_name` varchar(64) NOT NULL,
 			`campaign_desc` varchar(100) NOT NULL,
 			`customer_group` int(5) NOT NULL,
-			`start_at` timestamp NOT NULL,
+			`customer` varchar(20) NOT NULL,
+			`start_at` datetime NOT NULL,
 			`repeat_on` varchar(20) NOT NULL,
 			`notif_type` varchar(10) NOT NULL,
 			`notif_content` varchar(100) NOT NULL,

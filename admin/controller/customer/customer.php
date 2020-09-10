@@ -20,6 +20,7 @@ class ControllerCustomerCustomer extends Controller {
 		$this->load->model('customer/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			var_dump($this->request->post);
 			$this->model_customer_customer->addCustomer($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
