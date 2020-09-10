@@ -543,8 +543,11 @@ class ControllerExtensionModuleSosocialLogin extends Controller {
 			'so_sociallogin_popuplogin'			=> 1,
 			'so_sociallogin_fbtitle'			=> 'Facebook Login',
 			'so_sociallogin_fbimage'			=> 'catalog/sociallogin/fb.png',
+
 			'so_sociallogin_fbapikey'			=> '442675926063537',
 			'so_sociallogin_fbsecretapi'		=> '88d0f814891d4d1a9b173647291a911e',
+
+			
 			'so_sociallogin_fbstatus'			=> 1,
 			'so_sociallogin_twittertitle'		=> 'Twitter Login',
 			'so_sociallogin_twitimage'			=> 'catalog/sociallogin/twitter.png',

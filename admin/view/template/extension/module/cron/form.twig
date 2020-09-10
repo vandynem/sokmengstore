@@ -33,19 +33,33 @@
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-action">{{ entry_campaign }}</label>
             <div class="col-sm-10">
-              <input class="form-control" id="input-action" type="text" name="campaign_name" value="{{ campaign_name }}" placeholder="Campaign" />
+              <input class="form-control" id="input-action" type="text" name="campaign_name" value="{{ campaign_name }}" placeholder="{{ entry_campaign }}" />
             </div>
           </div>
 
            <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-action">{{ entry_campaign_description }}</label>
             <div class="col-sm-10">
-              <input class="form-control" id="input-action" type="text" name="campaign_desc" value="{{ campaign_desc }}" placeholder="description" />
+              <input class="form-control" id="input-action" type="text" name="campaign_desc" value="{{ campaign_desc }}" placeholder="{{ entry_campaign_description }}" />
             </div>
           </div>
 
-          <div class="form-group required">
 
+
+           <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-to">{{ entry_to }}</label>
+            <div class="col-sm-10">
+              <select name="to" id="input-to" class="form-control">
+                <option value="customer_all" name= "customers">{{ text_customer_all }}</option>
+                <option value="customer_group">{{ text_customer_group }}</option>
+                {# <option value="customer">{{ text_customer }}</option> #}
+              </select>
+            </div>
+          </div>
+
+
+
+          {# <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
           <div class="col-sm-10">
             <select name="customer_group" id="input-customer-group" class="form-control">
@@ -58,20 +72,53 @@
               {% endfor %}
             </select>
           </div>
+          </div> #}
+
+
+          <div class="form-group to" id="to-customer-group">
+            <label class="col-sm-2 control-label" for="input-customer-group">{{ entry_customer_group }}</label>
+            <div class="col-sm-10">
+              <select name="customer_group" id="input-customer-group" class="form-control">
+                
+                {% for customer_group in customer_groups %}
+                
+                <option value="{{ customer_group.customer_group_id }}">{{ customer_group.name }}</option>
+                
+                {% endfor %}
+              
+              </select>
+            </div>
           </div>
 
 
-           <div class="form-group required">
+
+          {# <div class="form-group to" id="to-customer">
+            <label class="col-sm-2 control-label" for="input-customer"><span data-toggle="tooltip" title="{{ help_customer }}">{{ entry_customer }}</span></label>
+            <div class="col-sm-10">
+              <input type="text" name="customers" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+              <div class="well well-sm" style="height: 150px; overflow: auto;"></div>
+            </div>
+          </div> #}
+
+
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-start-at">{{ entry_start_at }}</label>
             <div class="col-sm-3">
-              <input class="form-control" id="input-start-at" type="date" name="start_at" value="{{ start_at }}" placeholder="{{ entry_start_at }}" />
-            </div>
-
-            <label class="col-sm-2 control-label" for="input_start_time_at">{{ entry_start_time_at }}</label>
-            <div class="col-sm-3">
-              <input class="form-control" id="input_start_time_at" type="time" name="start_time_at" value="{{ start_time_at }}" placeholder="{{ entry_start_time_at }}" />
+              <input class="form-control" id="input-start-at" type="datetime-local" name="start_at" value="{{ start_at }}" placeholder="{{ entry_start_at }}"  />
             </div>
           </div>
+
+          {# <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-date-start">{{ entry_date_start }}</label>
+            <div class="col-sm-3">
+              <div class="input-group date">
+                <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span>
+              </div>
+            </div>
+          </div> #}
 
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input_repeat_on">{{ entry_repeat_on }}</label>
@@ -98,7 +145,7 @@
            <div class="form-group required">
             <label class="col-sm-2 control-label" for="input_notif_content">{{ entry_notification_content }}</label>
             <div class="col-sm-10">
-              <input class="form-control" id="input-notif_content" type="JSON" name="notif_content" value="{{ notif_content }}" placeholder="Content" />
+              <input class="form-control" id="input-notif_content" type="JSON" name="notif_content" value="{{ notif_content }}" placeholder="{{ entry_notification_content }}" />
             </div>
           </div>
 
@@ -126,4 +173,48 @@
     </div>
   </div>
 </div>
+
+ <script type="text/javascript"><!--
+$('select[name=\'to\']').on('change', function() {
+	$('.to').hide();
+
+	$('#to-' + this.value.replace('_', '-')).show();
+});
+
+$('select[name=\'to\']').trigger('change');
+//--></script> 
+  <script type="text/javascript"><!--
+// Customers
+$('input[name=\'customers\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
+					}
+				}));
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'customers\']').val('');
+
+		$('#input-customer' + item['value']).remove();
+
+		$('#input-customer').parent().find('.well').append('<div id="customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="customer[]" value="' + item['value'] + '" /></div>');
+	}
+});
+
+$('#input-customer').parent().find('.well').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+
+</script>
 {{ footer }}

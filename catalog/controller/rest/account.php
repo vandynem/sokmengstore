@@ -629,7 +629,7 @@ class ControllerRestAccount extends RestController
 
             if($this->includeMeta) {
 
-                if(isset($this->json['data']['transactions'])) {
+                if(isset($this->json['data']['transaeditUserctions'])) {
                     $transactionData = $this->json['data']['transactions'];
                 } else {
                     $transactionData = array();
