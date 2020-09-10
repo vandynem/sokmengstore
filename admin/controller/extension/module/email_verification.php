@@ -2,12 +2,15 @@
 class ControllerExtensionModuleEmailVerification extends Controller {
     private $error = array();
 
+
     public function index() {
         $this->load->language('extension/module/email_verification');
 
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $this->load->model('setting/setting');
+		$this->load->model('setting/setting');
+		
+		var_dump("here");
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
             $this->model_setting_setting->editSetting('module_email_verification', $this->request->post);
